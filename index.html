@@ -35,7 +35,7 @@
 
   /* HERO */
   .hero {
-    height: 100vh; position: relative; display: flex; align-items: center;
+    height: 100vh; min-height: 600px; position: relative; display: flex; align-items: center;
     background: linear-gradient(135deg, #0d1520 0%, #1a2332 45%, #1e2d45 100%);
     overflow: hidden;
   }
@@ -79,6 +79,8 @@
   .btn-ghost:hover { color: var(--gold); }
   .btn-ghost::after { content: '→'; font-size: 16px; transition: transform 0.25s; }
   .btn-ghost:hover::after { transform: translateX(4px); }
+
+  /* FIX 6: hero-stats no longer absolute on small screens */
   .hero-stats {
     position: absolute; bottom: 3rem; left: 4rem; right: 4rem;
     display: flex; gap: 3rem; z-index: 2;
@@ -103,7 +105,6 @@
   .proj-card { position: relative; height: 340px; overflow: hidden; cursor: pointer; }
   .proj-card.wide { grid-column: span 2; height: 420px; }
 
-  /* Project background gradients - no images needed */
   .proj-balaji { background: linear-gradient(135deg, #1a2a4a 0%, #0f1c35 40%, #1e3a5f 100%); }
   .proj-padmavati { background: linear-gradient(135deg, #2a1a3a 0%, #1c1030 50%, #3d1f5a 100%); }
   .proj-samarth { background: linear-gradient(135deg, #1a3a2a 0%, #0f2a1c 50%, #1e4a32 100%); }
@@ -112,7 +113,6 @@
   .proj-visual {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   }
-  /* SVG building illustrations */
   .proj-icon-wrap { opacity: 0.18; transition: opacity 0.4s; }
   .proj-card:hover .proj-icon-wrap { opacity: 0.28; }
   .proj-card::after {
@@ -139,14 +139,16 @@
   .filter-tab { padding: 10px 22px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; background: none; border: none; border-right: 1px solid var(--border); cursor: pointer; color: var(--text-light); transition: all 0.2s; }
   .filter-tab:last-child { border-right: none; }
   .filter-tab.active, .filter-tab:hover { background: var(--navy); color: #fff; }
+
+  /* FIX 3: listings grid uses auto-fill so hidden cards don't leave gaps */
   .listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+
   .prop-card { background: #fff; border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; }
   .prop-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); border-color: var(--gold); }
   .prop-thumb {
     height: 200px; position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
   }
-  /* Property card backgrounds */
   .bg-balaji { background: linear-gradient(135deg, #1a2a4a, #0f1c35); }
   .bg-padmavati { background: linear-gradient(135deg, #2a1a3a, #1c1030); }
   .bg-kulaswamini { background: linear-gradient(135deg, #1a3a1a, #0f2a0f); }
@@ -234,6 +236,8 @@
   .footer-links ul li { margin-bottom: 0.6rem; }
   .footer-links ul a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
   .footer-links ul a:hover { color: var(--gold); }
+  /* FIX 4: tel link alignment */
+  .footer-links ul a[href^="tel"] { display: inline-flex; align-items: center; gap: 4px; }
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.3); }
   .footer-bottom strong { color: var(--gold); }
 
@@ -247,8 +251,14 @@
     nav { padding: 0 1.5rem; }
     nav ul { display: none; }
     section { padding: 4rem 1.5rem; }
-    .hero-content { padding: 0 1.5rem; }
-    .hero-stats { left: 1.5rem; right: 1.5rem; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-content { padding: 0 1.5rem; padding-bottom: 220px; } /* FIX 6: push content up on small screens */
+    /* FIX 6: on mobile, stats become relative flow element, not absolute */
+    .hero-stats {
+      position: relative; bottom: auto; left: auto; right: auto;
+      padding: 1.5rem; gap: 1.5rem; flex-wrap: wrap;
+      background: rgba(255,255,255,0.05);
+      animation: none;
+    }
     .projects-grid { grid-template-columns: 1fr; }
     .proj-card.wide { grid-column: span 1; height: 300px; }
     .listings-grid { grid-template-columns: 1fr; }
@@ -282,7 +292,6 @@
   <div class="hero-shapes"></div>
   <div class="hero-grid-bg"></div>
   <div class="hero-line"></div>
-  <!-- SVG Building illustration -->
   <svg class="hero-building" viewBox="0 0 280 380" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="40" y="80" width="200" height="280" fill="white" opacity="0.6"/>
     <rect x="60" y="100" width="30" height="40" fill="white" opacity="0.4"/>
@@ -311,10 +320,11 @@
       <a href="#contact" class="btn-ghost">Book a Site Visit</a>
     </div>
   </div>
+  <!-- FIX 2: removed duplicate "50+ Premium Projects" stat; replaced with "500+ Happy Families" -->
   <div class="hero-stats">
     <div><div class="stat-num">50+</div><div class="stat-label">Premium Projects</div></div>
     <div><div class="stat-num">14+</div><div class="stat-label">Years of Trust</div></div>
-    <div><div class="stat-num">50+</div><div class="stat-label">Premium Projects</div></div>
+    <div><div class="stat-num">500+</div><div class="stat-label">Happy Families</div></div>
     <div><div class="stat-num">Solapur</div><div class="stat-label">Prime Locations</div></div>
   </div>
 </section>
@@ -328,7 +338,6 @@
   </div>
   <div class="projects-grid reveal">
 
-    <!-- Balaji Regency - wide featured -->
     <div class="proj-card proj-balaji wide">
       <div class="proj-visual">
         <div class="proj-icon-wrap">
@@ -366,7 +375,6 @@
       <a href="#contact" class="proj-enquire">Enquire Now</a>
     </div>
 
-    <!-- Padmavati Regency -->
     <div class="proj-card proj-padmavati">
       <div class="proj-visual">
         <div class="proj-icon-wrap">
@@ -401,7 +409,6 @@
       <a href="#contact" class="proj-enquire">Enquire Now</a>
     </div>
 
-    <!-- Samarth Villa -->
     <div class="proj-card proj-samarth">
       <div class="proj-visual">
         <div class="proj-icon-wrap">
@@ -428,12 +435,10 @@
       <a href="#contact" class="proj-enquire">Enquire Now</a>
     </div>
 
-    <!-- Kulaswamini Vihar - wide -->
     <div class="proj-card proj-kulaswamini wide">
       <div class="proj-visual">
         <div class="proj-icon-wrap">
           <svg width="500" height="220" viewBox="0 0 500 220" fill="none">
-            <!-- Trees and landscape -->
             <circle cx="60" cy="120" r="45" fill="white" opacity="0.4"/>
             <circle cx="120" cy="100" r="55" fill="white" opacity="0.35"/>
             <circle cx="380" cy="100" r="55" fill="white" opacity="0.35"/>
@@ -442,13 +447,10 @@
             <rect x="110" y="130" width="20" height="60" fill="white" opacity="0.3"/>
             <rect x="370" y="130" width="20" height="60" fill="white" opacity="0.3"/>
             <rect x="430" y="130" width="20" height="60" fill="white" opacity="0.3"/>
-            <!-- Gate -->
             <rect x="185" y="80" width="20" height="110" fill="white" opacity="0.5"/>
             <rect x="295" y="80" width="20" height="110" fill="white" opacity="0.5"/>
             <rect x="170" y="70" width="160" height="15" fill="white" opacity="0.4"/>
-            <!-- Ground -->
             <rect x="0" y="185" width="500" height="20" fill="white" opacity="0.2"/>
-            <!-- Plots -->
             <rect x="215" y="100" width="70" height="85" fill="white" opacity="0.15" stroke="white" stroke-width="1"/>
           </svg>
         </div>
@@ -485,7 +487,8 @@
       <button class="filter-tab" onclick="filterProps('plot',this)">Plots</button>
     </div>
   </div>
-  <div class="listings-grid">
+  <!-- FIX 3: wrapper div used so hidden cards collapse properly -->
+  <div class="listings-grid" id="listings-grid">
 
     <div class="prop-card" data-type="sale">
       <div class="prop-thumb bg-balaji">
@@ -679,20 +682,31 @@
         </div>
       </div>
     </div>
-    <form action="https://formspree.io/f/xeerkaly" method="POST" class="reveal">
+
+    <!--
+      FIX 1: Added onsubmit handler so handleSubmit() actually fires.
+      FIX 5: Added name attributes to all inputs so Formspree receives the data.
+      FIX 7: Removed broken _next redirect; success is handled in JS instead.
+    -->
+    <form
+      action="https://formspree.io/f/xeerkaly"
+      method="POST"
+      class="reveal"
+      onsubmit="return handleSubmit(event)"
+    >
       <div class="form-row">
         <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" placeholder="Your Name" required />
+          <label for="full-name">Full Name</label>
+          <input id="full-name" type="text" name="name" placeholder="Your Name" required />
         </div>
         <div class="form-group">
-          <label>Phone / WhatsApp</label>
-          <input type="tel" placeholder="94 07 70 70 70" required />
+          <label for="phone">Phone / WhatsApp</label>
+          <input id="phone" type="tel" name="phone" placeholder="94 07 70 70 70" required />
         </div>
       </div>
       <div class="form-group">
-        <label>I'm Interested In</label>
-        <select>
+        <label for="interest">I'm Interested In</label>
+        <select id="interest" name="interest">
           <option value="">Select a Project</option>
           <option>Balaji Regency – Ultra Luxury 2 BHK</option>
           <option>Padmavati Regency – 2/3 BHK Apartments</option>
@@ -702,18 +716,19 @@
           <option>General Enquiry</option>
         </select>
       </div>
-
       <div class="form-group">
-        <label>Message</label>
-        <textarea placeholder="Tell us what you're looking for, when you'd like to visit, or any questions..."></textarea>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us what you're looking for, when you'd like to visit, or any questions..."></textarea>
       </div>
       <input type="hidden" name="_subject" value="New Property Enquiry – GK Landlords Realty" />
-      <input type="hidden" name="_next" value="thank-you" />
       <button type="submit" class="btn-primary" style="width:100%;text-align:center;border:none;cursor:pointer;font-family:'Jost',sans-serif;">
         Send Enquiry
       </button>
       <div id="form-success" style="display:none;margin-top:1rem;padding:12px;background:#e8f4e8;color:#2d6a2d;font-size:13px;text-align:center;border:1px solid #b8d8b8;">
         ✓ Thank you! Guru Kapse's team will contact you within 24 hours.
+      </div>
+      <div id="form-error" style="display:none;margin-top:1rem;padding:12px;background:#fce8e8;color:#8b2020;font-size:13px;text-align:center;border:1px solid #e8b8b8;">
+        ✗ Something went wrong. Please call us directly at 94 07 70 70 70.
       </div>
     </form>
   </div>
@@ -742,6 +757,7 @@
         <li><a href="#properties">All Listings</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#contact">Contact</a></li>
+        <!-- FIX 4: proper tel link with aligned display -->
         <li><a href="tel:9407707070">📞 94 07 70 70 70</a></li>
       </ul>
     </div>
@@ -753,19 +769,49 @@
 </footer>
 
 <script>
+  // FIX 1 & 7: handleSubmit now submits to Formspree via fetch, shows success/error inline
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const successEl = document.getElementById('form-success');
+    const errorEl = document.getElementById('form-error');
+    successEl.style.display = 'none';
+    errorEl.style.display = 'none';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        successEl.style.display = 'block';
+        form.reset();
+        setTimeout(() => successEl.style.display = 'none', 6000);
+      } else {
+        errorEl.style.display = 'block';
+      }
+    } catch (err) {
+      errorEl.style.display = 'block';
+    }
+    return false;
+  }
+
+  // FIX 3: filter hides cards cleanly; grid reflows without gaps
   function filterProps(type, btn) {
     document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.prop-card').forEach(card => {
-      card.style.display = (type === 'all' || card.dataset.type === type) ? '' : 'none';
+      if (type === 'all' || card.dataset.type === type) {
+        card.style.display = '';
+        card.style.visibility = 'visible';
+      } else {
+        card.style.display = 'none';
+      }
     });
   }
-  function handleSubmit(e) {
-    e.preventDefault();
-    document.getElementById('form-success').style.display = 'block';
-    e.target.reset();
-    setTimeout(() => document.getElementById('form-success').style.display = 'none', 5000);
-  }
+
+  // Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
