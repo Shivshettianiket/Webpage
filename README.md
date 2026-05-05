@@ -30,5 +30,5 @@ A professional real estate website built for **GK Landlords Realty**, a property
 
 ## 👤 Author
 **Aniket Shivshetti**  
-2nd Year CSE @ Solapur University  
+2nd Year CSE @ PAHSU  
 [GitHub](https://github.com/Shivshettianiket)
